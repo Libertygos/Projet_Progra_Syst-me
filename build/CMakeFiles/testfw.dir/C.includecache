@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/net/cremi/julloison/Bureau/testGit/Projet_Progra_Syst-me/testfw.c
+stdbool.h
+-
+stdio.h
+-
+testfw.h
+/net/cremi/julloison/Bureau/testGit/Projet_Progra_Syst-me/testfw.h
+
+/net/cremi/julloison/Bureau/testGit/Projet_Progra_Syst-me/testfw.h
+stdbool.h
+-
+
