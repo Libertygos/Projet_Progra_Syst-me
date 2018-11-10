@@ -119,7 +119,7 @@ int testfw_register_suite(struct testfw_t *fw, char *suite)
 
   void *handle;
   testfw_func_t func_test;
-
+silent
 
   if (!(handle = dlopen ("hello", RTLD_LAZY)))
     {
@@ -127,6 +127,7 @@ int testfw_register_suite(struct testfw_t *fw, char *suite)
       exit (EXIT_FAILURE);
     }
 
+//faire un tableau avec les différents résultats de dlopen
   while((func_test = dlsym(handle, strcat(strcat(suite,"_"),"*"))) != NULL)
   //A verfier pour l* !!!
    {
@@ -148,5 +149,12 @@ int testfw_register_suite(struct testfw_t *fw, char *suite)
 
 int testfw_run_all(struct testfw_t *fw, int argc, char *argv[], enum testfw_mode_t mode)
 {
-    return 0;
+  int fail = 0;
+  if (argc == 1){
+    for (int i = 0; i < fw->count; i++){
+      if (! (fw->tab[i](argv[i+1])))){
+        fail++;
+      }
+    }
+
 }
