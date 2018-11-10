@@ -89,7 +89,7 @@ struct test_t *testfw_register_symb(struct testfw_t *fw, char *suite, char *name
   testfw_func_t func_test;
 
 
-  if (!(handle = dlopen ("hello.c", RTLD_LAZY)))
+  if (!(handle = dlopen ("hello", RTLD_LAZY)))
     {
       printf ("Erreur dlopen: %s\n", dlerror ());
       exit (EXIT_FAILURE);
@@ -105,11 +105,43 @@ struct test_t *testfw_register_symb(struct testfw_t *fw, char *suite, char *name
   test->func = func_test;
   fw->tab[fw->count] = test;
   fw->count++;
+
+  return test;
 }
 
 int testfw_register_suite(struct testfw_t *fw, char *suite)
 {
-    return 0;
+  //ne pas oublier les cas limites
+  struct test_t * test = malloc(sizeof(test_t));
+  int nb = 0;
+  test->suite = suite;
+  test->name = name;
+
+  void *handle;
+  testfw_func_t func_test;
+
+
+  if (!(handle = dlopen ("hello", RTLD_LAZY)))
+    {
+      printf ("Erreur dlopen: %s\n", dlerror ());
+      exit (EXIT_FAILURE);
+    }
+
+  while((func_test = dlsym(handle, strcat(strcat(suite,"_"),"*"))) != NULL)
+  //A verfier pour l* !!!
+   {
+     nb++;
+     test->func = func_test;
+     fw->tab[fw->count] = test;
+     fw->count++;
+   }
+   if (dlerror() != NULL) {
+     printf ("Erreur dlsym: %s\n", dlerror ());
+     dlclose (handle);
+     exit (EXIT_FAILURE);
+   }
+  dlclose (handle);
+  return nb;
 }
 
 /* ********** RUN TEST ********** */
