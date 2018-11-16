@@ -42,7 +42,7 @@ struct testfw_t *testfw_init(char *program, int timeout, char *logfile, char *cm
 void testfw_free(struct testfw_t *fw)
 {
   for (int i = 0; i < TESTSIZE; i ++){
-    free(fw -> tab[i]);
+    free(fw -> tab[i]);// ne pas free un pointeur NULL
   }
   free(fw);
 }
@@ -94,7 +94,7 @@ struct test_t *testfw_register_symb(struct testfw_t *fw, char *suite, char *name
       printf ("Erreur dlopen: %s\n", dlerror ());
       exit (EXIT_FAILURE);
     }
-  if (!(func_test = dlsym (handle, strcat(strcat(suite,"_"),name))))
+  if (!(func_test = dlsym (handle, strcat(strcat(suite,"_"),name)))) // Utiliser grep en redirigeant sa sortie avec un pipe.
    {
      printf ("Erreur dlsym: %s\n", dlerror ());
      dlclose (handle);
@@ -151,7 +151,7 @@ int testfw_run_all(struct testfw_t *fw, int argc, char *argv[], enum testfw_mode
 {
   int fail = 0;
   if (argc == 1){
-    for (int i = 0; i < fw->count; i++){
+    for (int i = 0; i < fw->count; i++){ //toutes les fonctions ont les mêmes arguments. bcp plus simple
       if (! (fw->tab[i](argv[i+1])))){
         fail++;
       }
