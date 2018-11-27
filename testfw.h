@@ -1,4 +1,6 @@
+
 // Simple Test Framework (testfw)
+/* DO NOT MODIFY THIS FILE */
 
 #ifndef TESTFW_H
 #define TESTFW_H
@@ -8,7 +10,7 @@
 /* ********** TEST FRAMEWORK API ********** */
 
 #define TESTFW_VERSION_MAJOR 0
-#define TESTFW_VERSION_MINOR 2
+#define TESTFW_VERSION_MINOR 3
 #define TESTFW_EXIT_SUCCESS EXIT_SUCCESS
 #define TESTFW_EXIT_FAILURE EXIT_FAILURE
 #define TESTFW_EXIT_TIMEOUT 124
@@ -122,3 +124,5 @@ int testfw_register_suite(struct testfw_t *fw, char *suite);
 int testfw_run_all(struct testfw_t *fw, int argc, char *argv[], enum testfw_mode_t mode);
 
 #endif
+
+

@@ -191,6 +191,60 @@ int testfw_register_suite(struct testfw_t *fw, char *suite){
 int testfw_run_all(struct testfw_t *fw, int argc, char *argv[], enum testfw_mode_t mode)
 {
   int fail = 0;
+
+
+  void hello(int sig){
+     printf("[%s] run test %s.%s in x ms (status %d)", strsignal(sig), "test", "hello", sig);
+  }
+  /*
+    sigset_t fullmask;
+    sigfillset(&fullmask);
+    sigprocmask(SIG_SETMASK, &fullmask, NULL);*/
+
+
+      if (!fork()){
+
+   for (int i = 0; i < fw->count; i++){
+     // char *suite = (testfw_get(fw, i))->suite;
+     //char *name = (testfw_get(fw, i))->name;
+     if ( ( *(( fw->tab[i] )->func ) )(argc, argv) == EXIT_SUCCESS ){
+       kill(getppid(), 0);
+       printf("OK\n");
+   }
+     /*
+        printf("I will kill daddy in 3 sec...\n");
+    sleep(3);
+    kill(getppid(), 9);*/
+     return 1;
+
+      }
+
+
+      }else{
+  /*
+
+      sigset_t emptymask;
+      sigemptyset(&emptymask);*/
+
+      struct sigaction act_hello;
+      act_hello.sa_handler = hello;
+      act_hello.sa_flags = 0;
+      sigemptyset(&act_hello.sa_mask);
+
+      // sigprocmask(SIG_SETMASK, &emptymask, NULL);
+
+      sigaction(0, &act_hello, NULL);
+
+      wait(NULL);
+
+    }
+
+
+    return fail;
+  }
+
+  /*
+  int fail = 0;
   if (fw == NULL){
     return EXIT_SUCCESS;
   }
@@ -216,5 +270,4 @@ int testfw_run_all(struct testfw_t *fw, int argc, char *argv[], enum testfw_mode
 	    printf("SUCCESS of %s.%s\n",suite, name );
       }
     }
-  return fail;
-}
+  return fail;*/
