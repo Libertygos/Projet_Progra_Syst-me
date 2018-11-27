@@ -10,10 +10,14 @@
 #include <fcntl.h>      /* Définitions des constantes O_*   */
 #include <unistd.h>
 #include <sys/types.h>
+<<<<<<< HEAD
 #include <sys/wait.h>
 #include <time.h>
 #include <sys/time.h>
 #include <stdbool.h>
+=======
+ #include <sys/wait.h>
+>>>>>>> aca29d32ada8d8265b40578ba9620e6c087d481e
 
 #define TESTSIZE 50
 #define TESTFILE "sample.c"
@@ -224,6 +228,7 @@ int testfw_run_all(struct testfw_t *fw, int argc, char *argv[], enum testfw_mode
   if (fw == NULL){
     return EXIT_SUCCESS;
   }
+<<<<<<< HEAD
 
   for (int i = 0; i < fw->count; i++){
 
@@ -301,6 +306,16 @@ int testfw_run_all(struct testfw_t *fw, int argc, char *argv[], enum testfw_mode
 
 
       /*if ( (*(( fw->tab[i] )->func ))(argc, argv) == EXIT_FAILURE)  {
+=======
+  for (int i = 0; i < fw->count; i++){
+
+      char * suite = ( fw->tab[i] )->suite;
+      char * name = ( fw->tab[i] )->name;
+
+
+
+      if ( (*(( fw->tab[i] )->func ))(argc, argv) == EXIT_FAILURE)  {
+>>>>>>> aca29d32ada8d8265b40578ba9620e6c087d481e
         fail++;
 
 	    printf("------------------------\n");
@@ -313,7 +328,14 @@ int testfw_run_all(struct testfw_t *fw, int argc, char *argv[], enum testfw_mode
 	    printf("------------------------\n");
 
 	    printf("SUCCESS of %s.%s\n",suite, name );
+<<<<<<< HEAD
     }*/
     }
     return fail;
   }
+=======
+      }
+    }
+  return fail;
+}
+>>>>>>> aca29d32ada8d8265b40578ba9620e6c087d481e
